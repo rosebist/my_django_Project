@@ -1,0 +1,5 @@
+# feb 26
+1. In every web app, a developer encounter these terms "media" and "static"
+2. while both of these look similar to assets(photos, videos, css, js etc). there is slight difference between them
+3. static are the fixeed assets in an application (eg. logo, css, js)
+whereas, media are the user uploads(profile picture, videos)

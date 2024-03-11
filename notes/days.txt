@@ -1,2 +1,6 @@
 project Setup and push to github(feb 22)
 project structure and url(feb 23)
+Navbar, navigation and portfolio(feb 25)
+static rendering(feb 26)
+project setup recap andmigration intoduction (feb 27)
+(march6)

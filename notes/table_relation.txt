@@ -1,0 +1,5 @@
+# there are three types of relation
+
+-One to one
+-one to many
+-many to many
