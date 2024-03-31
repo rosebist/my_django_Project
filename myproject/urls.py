@@ -24,7 +24,8 @@ from myapp.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
-    path('crud/',include('crud.urls'))
+    path('crud/',include('crud.urls')),
+    path('classbased/',include('classbased.urls'))
 ]
 
 if settings.DEBUG:

@@ -1,12 +1,10 @@
-{% extends 'crud/base.html' %}
+{% extends 'cruf/base.html' %}
 
 {% block content %}
-    {% include 'crud/nav.html' %}
+    {% inlclude 'curd/nav.html' %}
     <br>
     <h1>Classroom</h1>
-    <!-- <a href = "{%url 'add_classroom' %}" class = "btn btn-success" style = "float: right;">Add Classroom</a> -->
-    <a href="{% url 'form_classroom' %}" class = "btn btn-success" style = "float: right;">Add Classroom</a>
-
+    <a href="#" class="btn btn-success" style="float: right">Add ClassRoom</a>
     <table class="table table-striped">
         <thead>
           <tr>
@@ -21,11 +19,14 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ classroom.name}}</td>
             <td>
-              <a href="{% url 'update_classroom' classroom.id %}">Update</a>
-              <a href="{% url 'delete_classroom' classroom.id %}">Delete</a>
+              <a href="#">Update</a>
+              <a href="#">Delete</a>
             </td>
           </tr>
           {% endfor%}
         </tbody>
       </table>
+    
+
+
 {% endblock %}

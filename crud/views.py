@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import ClassRoom
-from .models import Student,UserProfile
+from .models import ClassRoom, Student, UserProfile
+from .forms import ClassRoomForm, ClassRoomModelForm
+
 
 def signup(request):
     print(request.method)
@@ -74,60 +75,64 @@ def delete_classroom(request, id):
         return redirect("crud_classroom")
     return render(request, template_name = "crud/delete_classroom.html", context={"classroom": c})
 
-
 def crud_student(request):
     students = Student.objects.all()
-    return render(request, template_name="crud/student.html", context={"students": students})
+    return render(request, template_name = 'crud/student.html', context={'students': students})
 
 def add_student(request):
-    if request.method=="POST":
-        profile_id=request.POST.get('profile_id')
-        classroom_id=request.POST.get('classroom_id')
-        Student.objects.get_or_create(user_id=profile_id,classroom_id=classroom_id)
+    if request.method == "POST":
+        profile_id = request.POST.get('profile_id')
+        classroom_id = request.POST.get('classroom_id')
+        Student.objects.get_or_create(user_id = profile_id, classroom_id = classroom_id)
         return redirect('crud_student')
-    profiles=UserProfile.objects.all()
+    profiles = UserProfile.objects.all()
     classrooms = ClassRoom.objects.all()
-    return render(request, template_name="crud/add_student.html", context={"profiles":profiles,"classrooms": classrooms})
+    return render(request, template_name = 'crud/add_student.html', 
+                  context={"profiles": profiles, "classrooms": classrooms})
 
-
-def update_crud_student(request,id):
-    c = Student.objects.get(id=id)
+def delete_student(request, id):
+    s = Student.objects.get(id=id)
     if request.method == "POST":
-        c.name = request.POST.get("name")
-        c.save()
-        return redirect('crud_student')
-    return render(request, template_name="crud/update_student.html", context={"student":c})
-
-def delete_crud_student(request, id):
-    c = Student.objects.get(id=id)
-    if request.method == "POST":
-        c.delete()
+        s.delete()
+        messages.success(request, "Student deleted successfully!")
         return redirect("crud_student")
-    return render(request, template_name = "crud/delete_student.html", context={"student": c})
+    return render(request, template_name="crud/delete_student.html", context={"student": s})
 
 @login_required
 def user_profile(request):
-    user=request.user
-    return render(request,template_name="crud/user_profile.html",context={"user":user})
+    user = request.user
+    return render(request, template_name="crud/user_profile.html", context = {"user": user})
 
 @login_required
 def update_profile(request):
-    user=request.user
-    if request.method=="POST":
-        user.first_name=request.POST.get("fn")
-        user.last_name=request.POST.get("fn")
+    user = request.user
+    if request.method == "POST":
+        user.first_name = request.POST.get("fn")
+        user.last_name = request.POST.get("ln")
         user.save()
 
-        address = request.POST.get("fn")
-        phone=request.POST.get("fn")
-        up, _ =UserProfile.objects.update_or_create(user=user,defaults={"address":address,"phone":phone})
+        address = request.POST.get("address")
+        phone = request.POST.get("phone")
+        up, _ = UserProfile.objects.update_or_create(user=user, defaults={"address": address, "phone":phone})
 
-        pp=request.FILES.get("pp")
+        pp = request.FILES.get('pp')
         print(pp)
         if pp:
-            up.profile_picture=pp
+            up.profile_picture = pp
             up.save()
-       
         return redirect("user_profile")
-    return render(request, template_name="crud/update_profile.html ", context={"user":user})
+    return render(request, template_name="crud/update_profile.html", context={"user": user})
 
+
+def form_classroom(request):
+    if request.method == "POST":
+        form = ClassRoomForm(request.POST)
+        if form.is_valid():
+            # name = request.POST.get("name") # This gets the name without validation
+            # name = form.cleaned_data.get("name")
+           #  ClassRoom.objects.create(name=name)
+            form.save()
+            return redirect('crud_classroom')
+    # form = ClassRoomForm()
+    form =ClassRoomForm()
+    return render(request, template_name="crud/form_classroom.html", context = {"form": form})

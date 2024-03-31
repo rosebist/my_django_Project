@@ -6,10 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> This is my root_page</h1>
-    <a href="{%url 'temp_inherit' %}">Template-Inheritance</a> <br>
-    <a href="{%url 'portfolio'%}">portfolio</a> <br>
-    <a href="{% url 'crud_classroom' %}">CRUD</a>
-    
+    <h1>  This my root page.  </h1>
+<h2>
+    <a href="{% url 'temp_inherit_home' %}"> Template-Inheritance</a><br>
+    <a href="{% url 'portfolio' %}"> Portfolio</a><br>
+    <a href="{% url 'crud_classroom' %}"> CRUD</a><br>
+    <a href="{% url 'crud_classroom' %}"> Django Forms</a>
+    <a href="{% url 'classbased_portfolio' %}"> PortfolioTemplateView </a>
+    <a href="{% url classbased_classroom %}"> ClassBased CRUD </a>
+</h2>
 </body>
 </html>
